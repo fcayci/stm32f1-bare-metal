@@ -129,8 +129,9 @@ void set_system_clock_to_25Mhz(void)
 
 /*
  * By default 8 MHz internal clock is used (HSI)
- * Set up as 72 MHz
+ * Set up as 72 MHz (HSE-PLL)
  *
+ * 25M ->   /5    ->   *8    ->   /5    ->   *9   -> 72 MHz
  * HSE -> PreDiv2 -> Pll2Mul -> PreDiv1 -> PllMul -> System Clock
  * Set Prediv1Src = PLL2, Set PllSrc as Prediv1
  *
@@ -138,8 +139,6 @@ void set_system_clock_to_25Mhz(void)
  * It is divided by 5 with PreDiv2, then muliplied by 8 with Pll2Mul
  * Then it is divided by 5 with PreDiv1, then multiplied by 9 with PllMul
  * Then choose Pll as the clock source
- *
- * 25Mhz / 5 * 8 / 5 * 9 = 72 MHz
  */
 void set_system_clock_to_72Mhz(void)
 {

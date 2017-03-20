@@ -29,4 +29,6 @@ Flash written and verified! jolly good!
 
 ## Projects
 * systick - SysTick Timer example
-* clock - An example to bump the clock up to 72 Mhz
+* clock - An example to bump the clock speed to 72 Mhz
+* ext_int - An external interrupt example to toggle LEDs using button presses. Uses EXTI0 and EXTI1 modules.
+* timer - An timer example to toggle LEDs in 1 second intervals. Uses Timer3 module.

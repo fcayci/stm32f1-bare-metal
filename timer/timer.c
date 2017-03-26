@@ -459,8 +459,8 @@ int32_t main(void)
 	//TIM3->CR1 |= (1 << 4);
 
 	// fCK_PSC / (PSC[15:0] + 1)
-	// 72 Mhz / 71999 + 1 = 10 khz timer clock speed
-	TIM3->PSC = 71999;
+	// 72 Mhz / 7199 + 1 = 10 khz timer clock speed
+	TIM3->PSC = 7199;
 
 	// Set the auto-reload value to 100000
 	//   which should generate roughly 1 second interrupts

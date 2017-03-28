@@ -97,7 +97,7 @@ typedef struct
 	uint32_t CCR2;      /* Address offset: 0x38 */
 	uint32_t CCR3;      /* Address offset: 0x3C */
 	uint32_t CCR4;      /* Address offset: 0x40 */
-	uint32_t RES2;      /* Address offset: 0x44 */
+	uint32_t BDTR;      /* Address offset: 0x44 */
 	uint32_t DCR;       /* Address offset: 0x48 */
 	uint32_t DMAR;      /* Address offset: 0x4C */
 } TIM_type;

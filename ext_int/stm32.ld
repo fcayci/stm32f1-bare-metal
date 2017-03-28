@@ -3,23 +3,34 @@ MEMORY {
 	rom (rx)  : ORIGIN = 0x08000000, LENGTH = 256K
 }
 
+ENTRY(main)
+
 SECTIONS {
-	.  = 0x08000000;  /* From 0x08000000 */
+	. = ORIGIN(rom);     /* From 0x08000000 */
+
 	.text :
 	{
-		*(.vectors)   /* Vector table */
-		*(.text)      /* Program code */
-		*(.rodata)    /* Read only data */
+		*(.vectors)      /* Vector table */
+		*(.text*)        /* Program code */
+		. = ALIGN(4);
+		*(.rodata*)      /* Read only data */
+		. = ALIGN(4);
 	} >rom
 
-	.  = 0x20000000;  /* From 0x20000000 */
+	. = ORIGIN(ram);     /* From 0x20000000 */
+
 	.data :
 	{
-		*(.data)      /* Data memory */
-	} >ram AT > rom
+		*(.data*)      /* Read-write initialized data */
+		. = ALIGN(4);
+	} >ram
 
 	.bss :
 	{
-		*(.bss)       /* Zero-filled run time allocate data memory */
+		*(.bss*)       /* Read-write zero initialized data */
+		. = ALIGN(4);
 	} >ram AT > rom
+
+	. = ALIGN(4);
+	end = .;
 }

@@ -32,3 +32,5 @@ Flash written and verified! jolly good!
 * clock - An example to bump the clock speed to 72 Mhz
 * ext_int - An external interrupt example to toggle LEDs using button presses. Uses EXTI0 and EXTI1 modules.
 * timer - A timer example to toggle LEDs in 1 second intervals. Uses Timer3 module.
+* timer_int - A timer example to toggle LEDs in 1 second intervals. Uses Timer3 module and interrupt.
+* pwm - A PWM example to fade PE14. Uses Timer1 module and interrupt.

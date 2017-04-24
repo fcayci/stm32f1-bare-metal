@@ -444,6 +444,13 @@ int32_t main(void)
 	// Set clock to 72 MHz
 	set_system_clock_to_72Mhz();
 
+	// ADC clock can be 14 Mhz at max. So we need to divide the
+	//   APB2 by 6 to make it 12 Mhz
+	// Ensure ADCPRE is zero
+	RCC-> CFGR &= ~(0b11 << 14);
+	// Set prescaler to 6
+	RCC-> CFGR |=  (0b10 << 14);
+
 	// Enable alternate function clock. Bit 0 in RCC APB2ENR register
 	RCC->APB2ENR |= (1 << 0);
 	// Enable GPIOD clock. Bit 5 in RCC APB2ENR register
@@ -465,12 +472,19 @@ int32_t main(void)
 	// Enable End of Conversion (EOC) interrupt
 	ADC1->CR1 |= (1 << 5);
 
+	// One conversion
+	ADC1->SQR1 = 0x00000000;
+
 	// Choose the analog channel to read
 	// Since we want channel 10 to be the first
 	//   conversion we write 10 to SQ1 bits (3:0)
 	//   which is in SQR3 register. For multiple conversions
 	//   keep writing the channel numbers to SQx bits.
 	ADC1->SQR3 = (10 << 0);
+
+	// Set up software trigger to start conversion
+	ADC1->CR2 |= (7 << 17);  // Select SWSTART as trigger
+	ADC1->CR2 |= (1 << 20);  // Enable external trigger
 
 	// Enable continuous conversion
 	ADC1->CR2 |= (1 << 1);
@@ -479,6 +493,16 @@ int32_t main(void)
 
 	// Enable A/D conversion
 	ADC1->CR2 |= (1 << 0);
+
+	// Calibration reset and start
+	//    Optional for better accuracy.
+	ADC1->CR2 |= (1 << 3);
+	while((ADC1->CR2 & (1 << 3)));
+	ADC1->CR2 |= (1 << 2);
+	while((ADC1->CR2 & (1 << 2)));	
+
+	// Start conversion with software trigger
+	ADC1->CR2 |= (1<<22);
 
 	while(1)
 	{

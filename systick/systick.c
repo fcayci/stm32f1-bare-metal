@@ -158,9 +158,11 @@ int32_t main(void)
 	GPIOD->ODR |= 0x0000; // 0x0002
 	GPIOE->ODR |= 0x4000;
 
-	// Initialize systick with 1000000
-	// Disable interrupt
-	init_systick(1000000, 0);
+	// Initialize systick without interrupt
+	init_systick(1000, 0);
+	// Initialize systick with interrupt
+	//  NOTE: comment out inside while loop
+	//init_systick(1000000, 1);
 
 	while(1){
 		delay_ms(1000);  // 1 second

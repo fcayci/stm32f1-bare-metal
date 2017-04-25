@@ -8,11 +8,13 @@ LINKER_SCRIPT = stm32.ld
 
 CFLAGS += -mcpu=cortex-m3 -mthumb # Processor setup
 CFLAGS += -O0  # Optimization is off
-CFLAGS += -g3  # Generate debug information
+#CFLAGS += -g3  # Generate debug information
 CFLAGS += -fno-common -Wall
 CFLAGS += -ffunction-sections -fdata-sections -Wl,--gc-sections
 
-LDFLAGS += -nostartfiles -T$(LINKER_SCRIPT)
+LDFLAGS += -nostartfiles
+LDFLAGS += --specs=nosys.specs
+LDFLAGS += -T$(LINKER_SCRIPT)
 
 CROSS_COMPILE = arm-none-eabi-
 CC = $(CROSS_COMPILE)gcc

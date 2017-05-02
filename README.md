@@ -34,3 +34,5 @@ Flash written and verified! jolly good!
 * timer - A timer example to toggle LEDs in 1 second intervals. Uses Timer3 module.
 * timer_int - A timer example to toggle LEDs in 1 second intervals. Uses Timer3 module and interrupt.
 * pwm - A PWM example to fade PE14. Uses Timer1 module and interrupt.
+* adc - An ADC input example. Displays the value of the analog pot on PortD LEDs.
+* mathtest - An example project to show how to use functions from the math library

@@ -36,3 +36,4 @@ Flash written and verified! jolly good!
 * pwm - A PWM example to fade PE14. Uses Timer1 module and interrupt.
 * adc - An ADC input example. Displays the value of the analog pot on PortD LEDs.
 * mathtest - An example project to show how to use functions from the math library
+* dac - A DAC output example. Fades PA4.

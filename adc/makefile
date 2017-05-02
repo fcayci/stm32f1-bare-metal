@@ -12,6 +12,7 @@ CFLAGS += -O0  # Optimization is off
 CFLAGS += -fno-common -Wall
 CFLAGS += -ffunction-sections -fdata-sections -Wl,--gc-sections
 
+LDFLAGS += -march=armv7-m
 LDFLAGS += -nostartfiles
 LDFLAGS += --specs=nosys.specs
 LDFLAGS += -T$(LINKER_SCRIPT)

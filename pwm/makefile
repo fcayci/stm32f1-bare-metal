@@ -12,6 +12,7 @@ CFLAGS += -O0  # Optimization is off
 CFLAGS += -fno-common -Wall
 CFLAGS += -ffunction-sections -fdata-sections -Wl,--gc-sections
 
+LDFLAGS += -march=armv7-m
 LDFLAGS += -nostartfiles
 LDFLAGS += --specs=nosys.specs
 LDFLAGS += -T$(LINKER_SCRIPT)
@@ -29,7 +30,7 @@ all: clean $(SRCS) build size
 build: $(TARGET).elf $(TARGET).hex $(TARGET).bin $(TARGET).lst
 
 $(TARGET).elf: $(OBJS)
-	@$(CC) $(LDFLAGS) $(OBJS) -o $@
+	@$(CC) $(OBJS) $(LDFLAGS) -o $@
 
 %.o: %.c
 	@echo "Building" $<

@@ -86,6 +86,7 @@ typedef struct
 } RCC_type;
 
 // Function declarations. Add your functions here
+void copy_data(void);
 int32_t main(void);
 
 /*************************************************
@@ -104,10 +105,45 @@ __attribute__ ((section(".vectors"))) = {
 };
 
 /*************************************************
+* Copy the data contents from LMA to VMA
+*************************************************/
+void copy_data(void)
+{
+	extern char _etext, _sdata, _edata, _sbss, _ebss;
+	char *src = &_etext;
+	char *dst = &_sdata;
+
+	/* ROM has data at end of text; copy it.  */
+	while (dst < &_edata)
+		*dst++ = *src++;
+
+	/* Zero bss.  */
+	for (dst = &_sbss; dst< &_ebss; dst++)
+		*dst = 0;
+}
+
+double alpha;
+
+uint32_t glb_uint_array[80] = {
+	1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10,
+	11,12,13,14,15,16,17,18,19,20,
+	21,22,23,24,25,26,27,28,29,30,
+	31,32,33,34,35,36,37,38,39,40,
+	41,42,43,44,45,46,47,48,49,50,
+	51,52,53,54,55,56,57,58,59,60,
+	61,62,63,64,65,66,67,68,69,70,
+	71,72,73,74,75,76,77,78,79,80};
+
+/*************************************************
 * Main code starts from here
 *************************************************/
 int32_t main(void)
 {
+	// Copy LMA to VMA for data section
+	copy_data();
+
+	alpha = 0.5f;
+
 	uint32_t i, j;
 	// Enable GPIOD clock. Bit 5 in RCC APB2ENR register
 	RCC->APB2ENR |= (1 << 5);
@@ -119,9 +155,9 @@ int32_t main(void)
 
 	while(1)
 	{
-		for (i=1; i<0xFFFF; i++)
+		for (i=1; i<80; i++)
 		{
-			GPIOD->ODR = (uint16_t)sqrt((double)(i*i));
+			GPIOD->ODR = (uint16_t)sqrt((double)glb_uint_array[i] * alpha);
 			for (j=10000; j>0; j--); // Delay
 		}
 	}

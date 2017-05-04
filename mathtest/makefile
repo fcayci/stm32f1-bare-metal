@@ -6,15 +6,24 @@ INCLUDES = -I.
 
 LINKER_SCRIPT = stm32.ld
 
-CFLAGS += -mcpu=cortex-m3 -mthumb
-CFLAGS += -O0
-CFLAGS += -fno-common -Wall
-CFLAGS += -ffunction-sections -fdata-sections -Wl,--gc-sections
+CFLAGS += -mcpu=cortex-m3 -mthumb # Processor setup
+CFLAGS += -O0 # Optimization is off
+CFLAGS += -g2 # Generate debug info
+CFLAGS += -fno-common
+CFLAGS += -Wall # Turn on warnings
+#CFLAGS += -pedantic # more warnings
+CFLAGS += -Wsign-compare
+CFLAGS += -mfloat-abi=soft -fsingle-precision-constant
+CFLAGS += -Wcast-align
+CFLAGS += -Wconversion # neg int const implicitly converted to uint
+CFLAGS += -fomit-frame-pointer # Do not use fp if not needed
+CFLAGS += -ffunction-sections -fdata-sections
 
-LDFLAGS += -march=armv7-m # Make sure to pull thumb libraries
+LDFLAGS += -march=armv7-m
 LDFLAGS += -nostartfiles
-LDFLAGS += -lm # link agains math
 LDFLAGS += --specs=nosys.specs
+LDFLAGS += -lm # link agains math
+LDFLAGS += -Wl,--gc-sections # Linker garbage collector
 LDFLAGS += -T$(LINKER_SCRIPT)
 
 CROSS_COMPILE = arm-none-eabi-
@@ -31,7 +40,7 @@ all: clean $(SRCS) build size
 build: $(TARGET).elf $(TARGET).hex $(TARGET).bin $(TARGET).lst
 
 $(TARGET).elf: $(OBJS)
-	$(CC) $(OBJS) $(LDFLAGS) -o $@
+	@$(CC) $(OBJS) $(LDFLAGS) -o $@
 
 %.o: %.c
 	@echo "Building" $<
@@ -71,4 +80,4 @@ clean:
 	@rm -f $(TARGET).lst
 	@rm -f $(TARGET).o
 
-.PHONY: all build size clean burn
+.PHONY: all build size clean burn debug

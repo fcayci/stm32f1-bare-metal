@@ -499,7 +499,7 @@ int32_t main(void)
 	ADC1->CR2 |= (1 << 3);
 	while((ADC1->CR2 & (1 << 3)));
 	ADC1->CR2 |= (1 << 2);
-	while((ADC1->CR2 & (1 << 2)));	
+	while((ADC1->CR2 & (1 << 2)));
 
 	// Start conversion with software trigger
 	ADC1->CR2 |= (1<<22);

@@ -248,6 +248,7 @@ typedef enum IRQn
 
 
 // Function declarations. Add your functions here
+void copy_data(void);
 void enable_interrupt(IRQn_type IRQn);
 void disable_interrupt(IRQn_type IRQn);
 void set_system_clock_to_25Mhz(void);
@@ -350,6 +351,24 @@ __attribute__ ((section(".vectors"))) = {
 	0,                              /* 73  CAN2_SCE                        */
 	0,                              /* 74  USB OTG FS                      */
 };
+
+/*************************************************
+* Copy the data contents from LMA to VMA
+*************************************************/
+void copy_data(void)
+{
+	extern char _etext, _sdata, _edata, _sbss, _ebss;
+	char *src = &_etext;
+	char *dst = &_sdata;
+
+	/* ROM has data at end of text; copy it.  */
+	while (dst < &_edata)
+		*dst++ = *src++;
+
+	/* Zero bss.  */
+	for (dst = &_sbss; dst< &_ebss; dst++)
+		*dst = 0;
+}
 
 volatile uint32_t duty;
 volatile uint32_t period;
@@ -470,6 +489,9 @@ void tim1_handler(void)
 *************************************************/
 int32_t main(void)
 {
+	// Copy LMA to VMA for data section
+	copy_data();
+
 	duty = 1500;
 	period = 3000;
 	// Set clock to 72 MHz

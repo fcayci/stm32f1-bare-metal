@@ -37,3 +37,4 @@ Flash written and verified! jolly good!
 * adc - An ADC input example. Displays the value of the analog pot on PortD LEDs.
 * mathtest - An example project to show how to use functions from the math library
 * dac - A DAC output example. Fades PA4.
+* dma - DMA memory to memory transfer example to transfer 256 bytes of data.

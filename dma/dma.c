@@ -552,7 +552,7 @@ int32_t main(void)
 	// Create a pointer at source and destination addresses
  	uint32_t *src_data = (uint32_t *) 0x2000A000;
 	uint32_t *dst_data = (uint32_t *) 0x2000A400;
-	uint32_t i;
+	uint32_t i, j;
 
 	// Transfer 256 bytes, decrements after each transfer
 	DMA1->CNDTR1 = 256;
@@ -574,10 +574,13 @@ int32_t main(void)
 	// Enable DMA
 	DMA1->CCR1 |= (1 << 0);
 
+	// Wait for some time
+	for(j=1000000; j>0; j--);
+
 	// Check out the destination contents after DMA transfer
 	for (i=0; i<64; i++){
 		GPIOD->ODR = dst_data[i];
-		for(uint32_t j=100000; j>0; j--);
+		for(j=100000; j>0; j--);
 	}
 
 	while(1)

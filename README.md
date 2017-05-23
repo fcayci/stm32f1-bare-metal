@@ -38,3 +38,4 @@ Flash written and verified! jolly good!
 * mathtest - An example project to show how to use functions from the math library
 * dac - A DAC output example. Fades PA4.
 * dma - DMA memory to memory transfer example to transfer 256 bytes of data.
+* uart - A UART example to transmit characters through PA10.
